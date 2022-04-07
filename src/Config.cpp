@@ -16,12 +16,12 @@ bool Config::checkConfig(){
 
 void Config::parse_config_file(){
     std::ifstream input(CONFIG_PATH, std::ifstream::in);
-    char c = input.get();
+    nlohmann::json configData;
+    
+    input >> configData;
+    for(nlohmann::json::iterator it = configData.begin();it != configData.end(); it++){
 
-    while (input.good()){
-        printf("%c", c);
-        c = input.get();
+        std::cout << it.key() << "\n" << *it << std::endl;
     }
-
     input.close();
 }
