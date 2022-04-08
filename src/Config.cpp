@@ -17,11 +17,20 @@ bool Config::checkConfig(){
 void Config::parse_config_file(){
     std::ifstream input(CONFIG_PATH, std::ifstream::in);
     nlohmann::json configData;
-    
-    input >> configData;
-    for(nlohmann::json::iterator it = configData.begin();it != configData.end(); it++){
 
-        std::cout << it.key() << "\n" << *it << std::endl;
+    input >> configData;
+
+    for(nlohmann::json::iterator it = configData.begin(); it != configData.end(); it++){
+
+        if(it.key() == "directories"){
+            for(auto data : *it)
+                Config::add(Config::directory_type, data, this);
+        }
+        else if(it.key() == "files"){
+            for (auto data : *it)
+                Config::add(Config::file_type, data, this);
+        }
+        
     }
     input.close();
 }
