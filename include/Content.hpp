@@ -5,34 +5,54 @@
 
 class File{
     public:
-        File(){};
+        File(std::string path){
+            isValid(&path);
+        };
         ~File(){};
-        inline void     setFilename(std::string filename){ this->filename = filename; };
-        inline void     setFilePtr(){ };
     private:
+        std::vector<std::string> files;
         std::string path;
         std::string filename;
         FILE*       filedata;
         
+        inline bool isValid(std::string* path){
+            if( !(this->filedata = fopen(path->c_str(), "r")) ){
+                return false;
+            }
+            fclose(filedata);
+            return true;
+        }
 };
 
 class Directory{
     public:
         Directory(std::string path){
-            this->path = path;
-            pullDirnameFromPath();
+            if(isValid(&path)){
+                this->path = path;
+                pullDirnameFromPath();
+                // pullContentsFromPath();
+            }
 
         }
         ~Directory(){};
     private:
-        std::vector<File*> contents;
+        std::vector<std::string> contents;
+        DIR*        dir;
         std::string path;
         std::string dirname;
+        
 
         inline void pullDirnameFromPath(){
-            std::string ret = this->path.substr(this->path.find_last_of("/"));
+            this->dirname = this->path.substr(this->path.find_last_of("/"));
         };
         inline void pullContentsFromPath(){
-            
+            dirent* dir_info = readdir(this->dir);
+
+        };
+        inline bool isValid(std::string* path){
+            if( !(this->dir = opendir(path->c_str())))
+                return false;
+            closedir(this->dir);
+            return true;
         };
 };
