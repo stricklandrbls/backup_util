@@ -12,6 +12,8 @@ class Config{
 
         static bool checkConfig();
         void        parse_config_file();
+        std::vector<Directory*>*    getDirectories;
+        std::vector<File*>*         getFiles;
 
     private:
         std::vector<Directory*>  directory_v;
@@ -23,7 +25,7 @@ class Config{
             config->directory_v.push_back(new Directory(path));
         };
         static inline void file_type(std::string path, Config* config){
-            config->file_v.push_back(new File());
+            config->file_v.push_back(new File(path));
         };
         static inline void add(void (*type) (std::string, Config*), std::string path, Config* config){ type(path, config); };
 };

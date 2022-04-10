@@ -33,7 +33,7 @@ class Directory{
                 // pullContentsFromPath();
             }
 
-        }
+        };
         ~Directory(){};
     private:
         std::vector<std::string> contents;
@@ -56,3 +56,8 @@ class Directory{
             return true;
         };
 };
+
+struct{
+    std::string path;
+    std::string hostname;
+} Destination;

@@ -26,9 +26,12 @@ void Config::parse_config_file(){
             for(auto data : *it)
                 Config::add(Config::directory_type, data, this);
         }
-        else if(it.key() == "files"){
+        if(it.key() == "files"){
             for (auto data : *it)
                 Config::add(Config::file_type, data, this);
+        }
+        if(it.key() == "destination"){
+            
         }
         
     }
