@@ -18,7 +18,7 @@ class Content{
 
         static const int K_READ_BUF_SIZE{ 1024 * 16 };
 
-        virtual bool isValid(std::string* path);
+        virtual bool isValid(std::string* path){};
         
         // inline std::string calculateHash(std::string filename)
         // {
