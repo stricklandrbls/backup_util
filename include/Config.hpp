@@ -39,12 +39,25 @@ class Config{
             std::string output = "Adding directory: ";
             output += path;
             Terminal::print(Terminal::info, output);
-            config->directory_v.push_back(new Directory(path));
+
+            Directory* entry = new Directory(path);
+
+            if(entry->isValid(&path))
+                config->directory_v.push_back(entry);
+            else
+                delete(entry);
         };
         static inline void file_type(std::string path, Config* config){
             std::string output = "Adding file: ";
             output += path;
-            config->file_v.push_back(new File(path));
+            Terminal::print(Terminal::info, output);
+
+            File* entry = new File(path);
+
+            if(entry->isValid(&path))
+                config->file_v.push_back(entry);
+            else
+                delete(entry);
         };
         static inline void add(void (*type) (std::string, Config*), std::string path, Config* config){ type(path, config); };
 

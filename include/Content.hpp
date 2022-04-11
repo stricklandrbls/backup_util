@@ -14,6 +14,7 @@ namespace var{
     const std::string FILE = "files";
     const std::string DEST = "destination";
     const std::string HOST = "hostname";
+    const std::string LOCAL = "local";
     const std::string PATH_D = "path";
 }
 
@@ -24,6 +25,10 @@ class Content{
     public:
         Content(){};
         ~Content(){};
+        std::string    getPath(){ return this->path; };
+        std::string    getHash(){ return this->hash; };
+
+        virtual bool isValid(std::string* path){return false;};
     protected:
         std::string path;
         std::vector<std::string> contents;
@@ -31,7 +36,6 @@ class Content{
 
         static const int K_READ_BUF_SIZE{ 1024 * 16 };
 
-        virtual bool isValid(std::string* path){return false;};
         
         // inline std::string calculateHash(std::string filename)
         // {
@@ -80,7 +84,6 @@ class File : public Content{
         };
         ~File(){};
 
-    protected:
         bool isValid(std::string* path) override{
             if( !(this->filedata = fopen(path->c_str(), "r")) ){
                 return false;
@@ -88,6 +91,8 @@ class File : public Content{
             fclose(filedata);
             return true;
         }
+
+    protected:
 
     private:
         std::string filename;
@@ -107,21 +112,28 @@ class Directory : public Content{
 
         };
         ~Directory(){};
+        std::string    _dirname(){ return this->dirname; };
 
-    protected:
         bool isValid(std::string* path) override{
-            if( !(this->dir = opendir(path->c_str())))
+            if( !(this->dir = opendir(path->c_str()))){
+                std::string output = "Directory not valid: ";
+                output += *path;
+                Terminal::print(Terminal::err, output);
+
                 return false;
+            }
             closedir(this->dir);
             return true;
         };
+
+    protected:
 
     private:
         DIR*        dir;
         std::string dirname;
         
         inline void pullDirnameFromPath(){
-            this->dirname = this->path.substr(this->path.find_last_of("/"));
+            // this->dirname = this->path.substr(this->path.find_last_of("/"));
         };
         inline void pullContentsFromPath(){
             // dirent* dir_info = readdir(this->dir);
