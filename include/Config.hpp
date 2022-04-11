@@ -10,10 +10,11 @@ class Config{
         Config(){};
         ~Config(){};
 
-        static bool checkConfig();
-        void        parse_config_file();
         std::vector<Directory*>*    getDirectories();
         std::vector<File*>*         getFiles();
+        
+        static bool checkConfig();
+        void        parse_config_file();
 
     private:
         std::vector<Directory*>  directory_v;

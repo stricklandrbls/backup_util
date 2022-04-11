@@ -22,15 +22,15 @@ void Config::parse_config_file(){
 
     for(nlohmann::json::iterator it = configData.begin(); it != configData.end(); it++){
 
-        if(it.key() == "directories"){
+        if(it.key() == var::DIR){
             for(auto data : *it)
                 Config::add(Config::directory_type, data, this);
         }
-        if(it.key() == "files"){
+        if(it.key() == var::FILE){
             for (auto data : *it)
                 Config::add(Config::file_type, data, this);
         }
-        if(it.key() == "destination"){
+        if(it.key() == var::DEST){
             std::cout << it.value() << std::endl;
         }
         

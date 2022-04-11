@@ -7,6 +7,16 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+
+/* CONST VARIABLES */
+namespace var{
+    const std::string DIR = "directories";
+    const std::string FILE = "files";
+    const std::string DEST = "destination";
+    const std::string HOST = "hostname";
+    const std::string PATH_D = "path";
+}
+
 class Content{
     public:
         Content(){};
@@ -94,6 +104,7 @@ class Directory : public Content{
 
         };
         ~Directory(){};
+
     protected:
         bool isValid(std::string* path) override{
             if( !(this->dir = opendir(path->c_str())))
@@ -106,7 +117,6 @@ class Directory : public Content{
         DIR*        dir;
         std::string dirname;
         
-
         inline void pullDirnameFromPath(){
             this->dirname = this->path.substr(this->path.find_last_of("/"));
         };
