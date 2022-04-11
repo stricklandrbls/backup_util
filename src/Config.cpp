@@ -31,7 +31,7 @@ void Config::parse_config_file(){
                 Config::add(Config::file_type, data, this);
         }
         if(it.key() == "destination"){
-            
+            std::cout << it.value() << std::endl;
         }
         
     }
