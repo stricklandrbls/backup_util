@@ -8,6 +8,7 @@ int main(){
     if( Config::checkConfig() )
         config.parse_config_file();
     
+    Compressor::setDestination(config.getOutputPath_p(), config.getOutputHost_p());
     
     return 0;
 }

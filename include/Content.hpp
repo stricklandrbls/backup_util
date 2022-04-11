@@ -17,6 +17,9 @@ namespace var{
     const std::string PATH_D = "path";
 }
 
+namespace network{
+    const int PORT = 16969;
+}
 class Content{
     public:
         Content(){};
@@ -28,7 +31,7 @@ class Content{
 
         static const int K_READ_BUF_SIZE{ 1024 * 16 };
 
-        virtual bool isValid(std::string* path){};
+        virtual bool isValid(std::string* path){return false;};
         
         // inline std::string calculateHash(std::string filename)
         // {
@@ -121,7 +124,7 @@ class Directory : public Content{
             this->dirname = this->path.substr(this->path.find_last_of("/"));
         };
         inline void pullContentsFromPath(){
-            dirent* dir_info = readdir(this->dir);
+            // dirent* dir_info = readdir(this->dir);
 
         };
 };

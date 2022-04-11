@@ -15,8 +15,8 @@ bool Config::checkConfig(){
 }
 
 void Config::parse_config_file(){
-    std::ifstream input(CONFIG_PATH, std::ifstream::in);
-    nlohmann::json configData;
+    std::ifstream   input(CONFIG_PATH, std::ifstream::in);
+    nlohmann::json  configData;
 
     input >> configData;
 
@@ -31,9 +31,23 @@ void Config::parse_config_file(){
                 Config::add(Config::file_type, data, this);
         }
         if(it.key() == var::DEST){
-            std::cout << it.value() << std::endl;
+            std::string output = "Setting HOST | PATH: ";
+            output += it.value()[var::HOST];
+            output += " | ";
+            output += it.value()[var::PATH_D];
+            Terminal::print(Terminal::info, output);
+
+            setOutputHost(it.value()[var::HOST]);
+            setOutputPath(it.value()[var::PATH_D]);
         }
         
     }
     input.close();
 }
+
+std::string Config::getOutputPath(){ return this->output_path; }
+std::string* Config::getOutputPath_p(){ return &(this->output_path); }
+std::string Config::getOutputHost(){ return this->output_host; }
+std::string* Config::getOutputHost_p(){ return &(this->output_host); }
+void Config::setOutputHost(std::string host){ this->output_host = host; }
+void Config::setOutputPath(std::string path){ this->output_path = path; }
