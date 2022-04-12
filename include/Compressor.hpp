@@ -1,6 +1,8 @@
 #pragma once
 #include "Content.hpp"
 #include "Config.hpp"
+#include <zlib.h>
+
 class Compressor{
     public:
         static inline void compress(Content* content_to_compress){
@@ -18,4 +20,6 @@ class Compressor{
         };
     protected:
         static inline Destination destination_path;
+        static inline std::string zip_directory = "zip -r ";
+        static inline std::string zip_file = "zip ";
 };

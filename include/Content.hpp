@@ -107,13 +107,14 @@ class Directory : public Content{
             if(isValid(&path)){
                 this->path = path;
                 pullDirnameFromPath();
+                setParentDirPath();
                 // pullContentsFromPath();
             }
 
         };
         ~Directory(){};
         std::string    _dirname(){ return this->dirname; };
-
+        std::string*    _parent_dir_path(){ return &(this->parent_dir_path); };
         bool isValid(std::string* path) override{
             if( !(this->dir = opendir(path->c_str()))){
                 std::string output = "Directory not valid: ";
@@ -131,14 +132,14 @@ class Directory : public Content{
     private:
         DIR*        dir;
         std::string dirname;
+        std::string parent_dir_path;
         
         inline void pullDirnameFromPath(){
-            // this->dirname = this->path.substr(this->path.find_last_of("/"));
+            this->dirname = this->path.substr(this->path.find_last_of("/") + 1);
         };
-        inline void pullContentsFromPath(){
-            // dirent* dir_info = readdir(this->dir);
-
-        };
+        void setParentDirPath(){
+            this->parent_dir_path = this->path.substr(0, this->path.find_last_of("/"));
+        }
 };
 
 struct Destination{
