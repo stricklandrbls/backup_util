@@ -13,8 +13,8 @@ int main(){
     std::vector<Directory*>*    dir_to_compress = config.getDirectories();
     std::vector<File*>*         file_to_compress = config.getFiles();
 
+    std::string command;
     for(auto* dir : *dir_to_compress){
-        std::string command;
 
         command = "zip -rv -9 ";
         command += Compressor::getDestinationPath();
