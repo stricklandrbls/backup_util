@@ -18,14 +18,16 @@ function setup {
           err "Config file already exists!"
         else
             print "Creating config file"
-            touch $config_dir'/config.json'
+            # touch $config_dir'/config.json'
+            mv "config.json" $config_dir
       fi
       
     else
         print "Creating config directory"
         mkdir $config_dir
         print "Creating config file"
-        touch $config_dir'/config.json'
+        # touch $config_dir'/config.json'
+        mv "config.json" $config_dir
     fi
 
 }
