@@ -16,7 +16,7 @@ int main(){
     for(auto* dir : *dir_to_compress){
         std::string command;
 
-        command = "zip -r ";
+        command = "zip -rv -9 ";
         command += Compressor::getDestinationPath();
         command += "/" + dir->_dirname() + " " + dir->getPath();
         system(command.c_str());
