@@ -21,7 +21,13 @@ void Config::parse_config_file(){
     input >> configData;
 
     for(nlohmann::json::iterator it = configData.begin(); it != configData.end(); it++){
-
+        auto cleanse = [&](std::string data){
+            while(data.find(" ")){
+                data.replace(data.find(" "), 1, "\\ ");
+            }
+        };
+        
+        cleanse(*it);
         if(it.key() == var::DIR){
             for(auto data : *it)
                 Config::add(Config::directory_type, data, this);
