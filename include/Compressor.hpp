@@ -13,7 +13,7 @@ class Compressor{
 
                     command = "zip -rv -7 ";
                     command += Compressor::getDestinationPath();
-                    command += "/" + (*it)->_dirname() + " " + (*it)->getPath();
+                    command += (*it)->_dirname() + " " + (*it)->getPath();
                     #ifndef TEST
                     system(command.c_str());
                     #endif
@@ -27,7 +27,7 @@ class Compressor{
 
                     command = "zip -rv -7 ";
                     command += Compressor::getDestinationPath();
-                    command += "/" + (*it)->_dirname() + " " + (*it)->getPath();
+                    command += (*it)->_dirname() + " " + (*it)->getPath();
                     #ifndef TEST
                     system(command.c_str());
                     #endif
