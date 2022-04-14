@@ -14,13 +14,17 @@ int main(){
     std::vector<File*>*         file_to_compress = config.getFiles();
 
     std::string command;
-    for(auto* dir : *dir_to_compress){
-
-        command = "zip -rv -7 ";
-        command += Compressor::getDestinationPath();
-        command += "/" + dir->_dirname() + " " + dir->getPath();
-        system(command.c_str());
-        Terminal::print(Terminal::success, command);        
+    std::size_t forks = dir_to_compress->size() / 2;
+    std::size_t lb, mb;
+    if(forks % 2 != 0){
+        lb = forks;
+        mb = forks + 1;
     }
+    else{
+        lb = forks -1;
+        mb = forks;
+    }
+    Compressor::compress(dir_to_compress, lb, mb, forks);
     return 0;
 }
+
