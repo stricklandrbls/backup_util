@@ -8,4 +8,4 @@
 
 #define CONFIG_PATH "/etc/backup-util/config.json"
 
-
+#define TEST
