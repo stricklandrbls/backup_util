@@ -25,15 +25,25 @@ class Content{
     public:
         Content(){};
         ~Content(){};
-        std::string    getPath(){ return this->path; };
-        std::string    getHash(){ return this->hash; };
-
+        std::string     getPath(){ return this->path; };
+        std::string     getHash(){ return this->hash; };
+        void            setZipFilePath(std::string data){
+            this->zip_path = data;
+            size_t no_return = 0;
+            while(zip_path.find(" ") != std::string::npos && zip_path.find(" ") > no_return + 1) {
+                no_return = zip_path.find(" ");
+                zip_path.replace(zip_path.find(" "), 1, "\\ ");
+                printf("%s\n", zip_path.c_str());
+            }
+        
+        }
+        std::string&    getZipFilePath(){ return this->zip_path; };
         virtual bool isValid(std::string* path){return false;};
     protected:
         std::string path;
         std::vector<std::string> contents;
         std::string hash;
-
+        std::string zip_path;
         static const int K_READ_BUF_SIZE{ 1024 * 16 };
 
         
@@ -106,6 +116,7 @@ class Directory : public Content{
         Directory(std::string path){
             if(isValid(&path)){
                 this->path = path;
+                setZipFilePath(this->path);
                 pullDirnameFromPath();
                 setParentDirPath();
                 // pullContentsFromPath();
@@ -135,8 +146,7 @@ class Directory : public Content{
         std::string parent_dir_path;
         
         inline void pullDirnameFromPath(){
-            this->dirname = this->path.substr(this->path.find_last_of("/") + 1);
-            Terminal::print(Terminal::info, this->dirname);
+            this->dirname = this->zip_path.substr(this->zip_path.find_last_of("/") + 1);
         };
         void setParentDirPath(){
             this->parent_dir_path = this->path.substr(0, this->path.find_last_of("/"));
