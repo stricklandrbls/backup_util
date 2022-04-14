@@ -11,7 +11,7 @@ int main(){
     Compressor::setDestination(config.getOutputPath_p(), config.getOutputHost_p());
     std::string output = "Compressor destination: " + Compressor::getDestinationPath();
     Terminal::print(Terminal::success, output);
-    
+
     std::vector<Directory*>*    dir_to_compress = config.getDirectories();
     std::vector<File*>*         file_to_compress = config.getFiles();
 
