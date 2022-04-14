@@ -135,7 +135,7 @@ class Directory : public Content{
         std::string parent_dir_path;
         
         inline void pullDirnameFromPath(){
-            this->dirname = this->path.substr(this->path.find_last_of("/") + 1);
+            this->dirname = this->path.substr(this->path.find_last_of("/"));
         };
         void setParentDirPath(){
             this->parent_dir_path = this->path.substr(0, this->path.find_last_of("/"));
