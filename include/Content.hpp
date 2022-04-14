@@ -136,6 +136,7 @@ class Directory : public Content{
         
         inline void pullDirnameFromPath(){
             this->dirname = this->path.substr(this->path.find_last_of("/"));
+            Terminal::print(Terminal::info, this->dirname);
         };
         void setParentDirPath(){
             this->parent_dir_path = this->path.substr(0, this->path.find_last_of("/"));
