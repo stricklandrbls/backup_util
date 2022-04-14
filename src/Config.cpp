@@ -27,14 +27,17 @@ void Config::parse_config_file(){
             }
         };
         
-        cleanse(*it);
         if(it.key() == var::DIR){
-            for(auto data : *it)
+            for(auto data : *it){
+                cleanse(data);
                 Config::add(Config::directory_type, data, this);
+            }
         }
         if(it.key() == var::FILE){
-            for (auto data : *it)
+            for (auto data : *it){
+                cleanse(data);
                 Config::add(Config::file_type, data, this);
+            }
         }
         if(it.key() == var::DEST){
             std::string output = "Setting HOST | PATH: ";
