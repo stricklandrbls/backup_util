@@ -17,6 +17,7 @@ int main(){
 
     std::string command;
     std::size_t forks = dir_to_compress->size() / 2;
+    
     std::size_t lb, mb;
     if(forks % 2 != 0){
         lb = forks;

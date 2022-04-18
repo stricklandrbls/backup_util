@@ -11,7 +11,7 @@ class Compressor{
                 for(std::vector<Directory*>::iterator it = content_to_compress->begin(); it <= content_to_compress->begin() + lb; it++){
                     printf("compressing dir<%p>: %s\n", *it, (*it)->getZipFilePath().c_str());
 
-                    command = "zip -rv -7 ";
+                    command = "zip -rq -3 ";
                     command += Compressor::getDestinationPath();
                     command += "/" + (*it)->_dirname() + " " + (*it)->getZipFilePath();
                     #ifndef TEST
@@ -25,7 +25,7 @@ class Compressor{
                 for(std::vector<Directory*>::iterator it = content_to_compress->begin() + mb; it != content_to_compress->end(); it++){
                     printf("compressing dir<%p>: %s\n", *it, (*it)->getZipFilePath().c_str());
 
-                    command = "zip -rv -7 ";
+                    command = "zip -rq -3 ";
                     command += Compressor::getDestinationPath();
                     command += "/" + (*it)->_dirname() + " " + (*it)->getZipFilePath();
                     #ifndef TEST
