@@ -16,7 +16,7 @@ class Config{
 
         // std::vector<Directory*>*    getDirectories();
         // std::vector<File*>*         getFiles();
-        std::vector<std::variant<Directory*, File*>>*   getContent();
+        std::vector<Content>*   getContent();
 
         static bool checkConfig();
 
@@ -34,9 +34,9 @@ class Config{
         std::string output_path;
         std::string output_host;
 
-        std::vector<Directory*>  directory_v;
-        std::vector<File*>       file_v;
-        std::vector<std::variant<Directory*, File*>>    content_v;
+        // std::vector<Directory*>  directory_v;
+        // std::vector<File*>       file_v;
+        std::vector<Content>    content_v;
 
         nlohmann::json  configData;
 
