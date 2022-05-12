@@ -52,8 +52,9 @@ std::string* Config::getOutputPath_p(){ return &(this->output_path); }
 std::string Config::getOutputHost(){ return this->output_host; }
 std::string* Config::getOutputHost_p(){ return &(this->output_host); }
 
-std::vector<Directory*>*    Config::getDirectories(){ return &(this->directory_v); }
-std::vector<File*>*         Config::getFiles(){ return &(this->file_v); }
+// std::vector<Directory*>*    Config::getDirectories(){ return &(this->directory_v); }
+// std::vector<File*>*         Config::getFiles(){ return &(this->file_v); }
+std::vector<std::variant<Directory*, File*>>*    Config::getContent(){ return &(this->content_v); }
 
 void Config::setOutputHost(std::string host){ this->output_host = host; }
 void Config::setOutputPath(std::string path){ this->output_path = path; }

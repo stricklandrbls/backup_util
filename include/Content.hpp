@@ -21,10 +21,10 @@ namespace var{
 namespace network{
     const int PORT = 16969;
 }
-class Content{
+class Content_Base{
     public:
-        Content(){};
-        ~Content(){};
+        Content_Base(){};
+        ~Content_Base(){};
         std::string     getPath(){ return this->path; };
         std::string     getHash(){ return this->hash; };
         void            setZipFilePath(std::string data){
@@ -86,7 +86,7 @@ class Content{
         // }
 };
 
-class File : public Content{
+class File : public Content_Base{
     public:
         File(std::string path){
             if(isValid(&path));
@@ -111,7 +111,7 @@ class File : public Content{
 
 };
 
-class Directory : public Content{
+class Directory : public Content_Base{
     public:
         Directory(std::string path){
             if(isValid(&path)){
@@ -157,3 +157,5 @@ struct Destination{
     std::string* path;
     std::string* hostname;
 };
+
+using Content = std::variant<Directory*, File*>;

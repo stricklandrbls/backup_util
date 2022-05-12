@@ -11,8 +11,9 @@ class Config{
         Config(){};
         ~Config(){};
 
-        std::vector<Directory*>*    getDirectories();
-        std::vector<File*>*         getFiles();
+        // std::vector<Directory*>*    getDirectories();
+        // std::vector<File*>*         getFiles();
+        std::vector<std::variant<Directory*, File*>>*   getContent();
 
         static bool checkConfig();
 
@@ -32,9 +33,13 @@ class Config{
 
         std::vector<Directory*>  directory_v;
         std::vector<File*>       file_v;
+        std::vector<std::variant<Directory*, File*>>    content_v;
+
         nlohmann::json  configData;
 
         void (*type) (std::string);
+        static inline void add(void (*type) (std::string, Config*), std::string path, Config* config){ type(path, config); };
+        
         static inline void directory_type(std::string path, Config* config){
             std::string output = "Adding directory: ";
             output += path;
@@ -43,7 +48,7 @@ class Config{
             Directory* entry = new Directory(path);
 
             if(entry->isValid(&path))
-                config->directory_v.push_back(entry);
+                config->content_v.push_back(entry);
             else
                 delete(entry);
         };
@@ -55,10 +60,9 @@ class Config{
             File* entry = new File(path);
 
             if(entry->isValid(&path))
-                config->file_v.push_back(entry);
+                config->content_v.push_back(entry);
             else
                 delete(entry);
         };
-        static inline void add(void (*type) (std::string, Config*), std::string path, Config* config){ type(path, config); };
 
 };

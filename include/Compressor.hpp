@@ -2,18 +2,19 @@
 #include "Content.hpp"
 #include "Config.hpp"
 #include <zlib.h>
+using content_it = std::vector<Content>::iterator;
 
 class Compressor{
     public:
-        static inline void compress(std::vector<Directory*>* content_to_compress, std::size_t& lb, std::size_t& mb, std::size_t& forks){
+        static inline void compress(std::vector<Content>* content_to_compress, std::size_t& lb, std::size_t& mb, std::size_t& forks){
             if(fork() == 0){
                 std::string command;
-                for(std::vector<Directory*>::iterator it = content_to_compress->begin(); it <= content_to_compress->begin() + lb; it++){
-                    printf("compressing dir<%p>: %s\n", *it, (*it)->getZipFilePath().c_str());
+                for(content_it it = content_to_compress->begin(); it <= content_to_compress->begin() + lb; it++){
+                    printf("compressing dir<%p>: %s\n", std::get<Directory*>(*it), std::get<Directory*>(*it)->getZipFilePath().c_str());
 
                     command = "zip -rq -3 ";
                     command += Compressor::getDestinationPath();
-                    command += "/" + (*it)->_dirname() + " " + (*it)->getZipFilePath();
+                    command += "/" + std::get<Directory*>(*it)->_dirname() + " " + std::get<Directory*>(*it)->getZipFilePath();
                     #ifndef TEST
                     system(command.c_str());
                     #endif
@@ -22,12 +23,12 @@ class Compressor{
             }
             else{
                 std::string command;
-                for(std::vector<Directory*>::iterator it = content_to_compress->begin() + mb; it != content_to_compress->end(); it++){
-                    printf("compressing dir<%p>: %s\n", *it, (*it)->getZipFilePath().c_str());
+                for(content_it it = content_to_compress->begin() + mb; it != content_to_compress->end(); it++){
+                    printf("compressing dir<%p>: %s\n", std::get<Directory*>(*it), std::get<Directory*>(*it)->getZipFilePath().c_str());
 
                     command = "zip -rq -3 ";
                     command += Compressor::getDestinationPath();
-                    command += "/" + (*it)->_dirname() + " " + (*it)->getZipFilePath();
+                    command += "/" + std::get<Directory*>(*it)->_dirname() + " " + std::get<Directory*>(*it)->getZipFilePath();
                     #ifndef TEST
                     system(command.c_str());
                     #endif

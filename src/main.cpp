@@ -12,11 +12,13 @@ int main(){
     std::string output = "Compressor destination: " + Compressor::getDestinationPath();
     Terminal::print(Terminal::success, output);
 
-    std::vector<Directory*>*    dir_to_compress = config.getDirectories();
-    std::vector<File*>*         file_to_compress = config.getFiles();
+    // std::vector<Directory*>*    dir_to_compress = config.getDirectories();
+    // std::vector<File*>*         file_to_compress = config.getFiles();
+    
+    std::vector<Content>*    content_to_compress = config.getContent();
 
     std::string command;
-    std::size_t forks = dir_to_compress->size() / 2;
+    std::size_t forks = content_to_compress->size() / 2;
     
     std::size_t lb, mb;
     if(forks % 2 != 0){
@@ -27,7 +29,7 @@ int main(){
         lb = forks -1;
         mb = forks;
     }
-    Compressor::compress(dir_to_compress, lb, mb, forks);
+    // Compressor::compress(content_to_compress, lb, mb, forks);
     return 0;
 }
 
