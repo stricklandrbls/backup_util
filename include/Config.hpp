@@ -6,6 +6,9 @@
 #include <cstdlib>
 #include <vector>
 #include <iostream>
+#include <memory>
+
+using smart_string = std::unique_ptr<std::string>;
 class Config{
     public:
         Config(){};
@@ -41,9 +44,9 @@ class Config{
         static inline void add(void (*type) (std::string, Config*), std::string path, Config* config){ type(path, config); };
         
         static inline void directory_type(std::string path, Config* config){
-            std::string output = "Adding directory: ";
-            output += path;
-            Terminal::print(Terminal::info, output);
+            smart_string output = std::make_unique<std::string>("Adding directory: ");
+            *output += path;
+            Terminal::print(Terminal::info, *output);
 
             Directory* entry = new Directory(path);
 
@@ -53,9 +56,9 @@ class Config{
                 delete(entry);
         };
         static inline void file_type(std::string path, Config* config){
-            std::string output = "Adding file: ";
-            output += path;
-            Terminal::print(Terminal::info, output);
+            smart_string output = std::make_unique<std::string>("Adding directory: ");
+            *output += path;
+            Terminal::print(Terminal::info, *output);
 
             File* entry = new File(path);
 
