@@ -92,7 +92,10 @@ class File : public Content_Base{
             if(isValid(&path));
                 // this->hash = this->calculateHash(path);
         };
+        
         ~File(){};
+
+        File& operator=(const File& copy){ return *this; };
 
         bool isValid(std::string* path) override{
             if( !(this->filedata = fopen(path->c_str(), "r")) ){
