@@ -4,8 +4,28 @@
 #include <zlib.h>
 using content_it = std::vector<Content>::iterator;
 
+struct thread_args{
+    thread_args(std::vector<Content>* c, std::size_t lb, std::size_t ub): content_to_compress{ c }, lower_bound{ lb }, upper_bound{ ub }{};
+    std::vector<Content>*   content_to_compress;
+    size_t lower_bound;
+    size_t upper_bound;
+};
+
 class Compressor{
     public:
+        static inline void* compress_t(void* args){
+            thread_args* thread_arguments = (thread_args*) args;
+            std::string command;
+            for(content_it it = thread_arguments->content_to_compress->begin() + thread_arguments->lower_bound; it != thread_arguments->content_to_compress->begin() + thread_arguments->upper_bound; it++)
+            {
+                printf("compressing dir<%p>: %s\n", std::get<Directory*>(*it), std::get<Directory*>(*it)->getZipFilePath().c_str());
+                command = "zip -rq -3" + Compressor::getDestinationPath() + "/" + std::get<Directory*>(*it)->_dirname() + " " + std::get<Directory*>(*it)->getZipFilePath();
+                #ifndef TEST
+                system(command.c_str());
+                #endif
+                Terminal::print(Terminal::success, command);
+            }
+        }
         static inline void compress(std::vector<Content>* content_to_compress, std::size_t& lb, std::size_t& mb, std::size_t& forks){
             if(fork() == 0){
                 std::string command;

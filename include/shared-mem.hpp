@@ -26,7 +26,6 @@ class SharedMem{
                 fseek(config_file, 0, 0);
                 fread(this->shmdata, this->shmsize, 1, config_file);
                 fclose(config_file);
-                printf("shmdata: %s\n", this->shmdata);
             }
             else{
                 printf("Could not get shared memory block");

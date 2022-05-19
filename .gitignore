@@ -1,5 +1,9 @@
-./bin/*
+bin/backup_util
+bin/test
 ./vscode
-bin
 .vscode
 resource
+build
+CMakeFiles
+TODO
+test
