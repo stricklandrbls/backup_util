@@ -2,7 +2,7 @@
 #include "common.hpp"
 #include <vector>
 #include <dirent.h>
-// #include <openssl/sha.h>
+#include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -21,72 +21,37 @@ namespace var{
 namespace network{
     const int PORT = 16969;
 }
-class Content_Base{
+
+using path = std::filesystem::path;
+
+class ContentBase{
     public:
-        Content_Base(){};
-        ~Content_Base(){};
+        ContentBase(){};
+        ~ContentBase(){};
+
+        // Forward declarations
+        void            setZipFilePath(std::string* data);
+
+        // Header defined functions
         std::string     getPath(){ return this->path; };
-        std::string     getHash(){ return this->hash; };
-        void            setZipFilePath(std::string data){
-            this->zip_path = data;
-            size_t no_return = 0;
-            while(zip_path.find(" ") != std::string::npos && zip_path.find(" ") > no_return + 1) {
-                no_return = zip_path.find(" ");
-                zip_path.replace(zip_path.find(" "), 1, "\\ ");
-                printf("%s\n", zip_path.c_str());
-            }
-        
-        }
         std::string&    getZipFilePath(){ return this->zip_path; };
-        virtual bool isValid(std::string* path){return false;};
+
+        // Inhieritance Functions
+        virtual bool    isValid(std::string* path) = 0;
+
+        // Currently unused
+        // std::string     getHash(){ return this->hash; };
+
     protected:
         std::string path;
-        std::vector<std::string> contents;
-        std::string hash;
         std::string zip_path;
-        static const int K_READ_BUF_SIZE{ 1024 * 16 };
 
-        
-        // inline std::string calculateHash(std::string filename)
-        // {
-        //     // Initialize openssl
-        //     SHA256_CTX context;
-        //     if(!SHA256_Init(&context))
-        //     {
-        //         return nullptr;
-        //     }
-
-        //     // Read file and update calculated SHA
-        //     char buf[K_READ_BUF_SIZE];
-        //     std::ifstream file(filename, std::ifstream::binary);
-        //     while (file.good())
-        //     {
-        //         file.read(buf, sizeof(buf));
-        //         if(!SHA256_Update(&context, buf, file.gcount()))
-        //         {
-        //             return nullptr;
-        //         }
-        //     }
-
-        //     // Get Final SHA
-        //     unsigned char result[SHA256_DIGEST_LENGTH];
-        //     if(!SHA256_Final(result, &context))
-        //     {
-        //         return nullptr;
-        //     }
-
-        //     // Transform byte-array to string
-        //     std::stringstream shastr;
-        //     shastr << std::hex << std::setfill('0');
-        //     for (const auto &byte: result)
-        //     {
-        //         shastr << std::setw(2) << (int)byte;
-        //     }
-        //     return shastr.str();
-        // }
+        // Currently Unused
+        // std::vector<std::string> contents;
+        // std::string hash;
 };
 
-class File : public Content_Base{
+class File : public ContentBase{
     public:
         File(std::string path){
             if(isValid(&path));
@@ -114,12 +79,12 @@ class File : public Content_Base{
 
 };
 
-class Directory : public Content_Base{
+class Directory : public ContentBase{
     public:
         Directory(std::string path){
             if(isValid(&path)){
                 this->path = path;
-                setZipFilePath(this->path);
+                setZipFilePath(&(this->path));
                 pullDirnameFromPath();
                 setParentDirPath();
                 // pullContentsFromPath();
