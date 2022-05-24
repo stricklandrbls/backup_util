@@ -36,9 +36,9 @@ bool ContentBase::isValid(const std::string& path){
 **********************************************************************************************************/
 
 void Directory::pullDirnameFromPath(){
-    std::string_view zip_path_v = this->zip_path.string();
-
-    this->dirname = zip_path_v.substr(zip_path_v.find_last_of("/") + 1);
+    std::string_view file_path_view = this->file_path.string();
+    
+    this->dirname = this->file_path.string().substr(file_path_view.find_last_of("/") + 1);
 }
 
 void Directory::setParentDirPath(){

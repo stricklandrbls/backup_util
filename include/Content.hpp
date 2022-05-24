@@ -39,10 +39,6 @@ class ContentBase{
         std::string        getPath(){ return this->file_path.string(); }
         std::string        getZipFilePath(){ return this->zip_path.string(); }
 
-
-        // Inhieritance Functions
-        // virtual bool    isValid(std::string* path) = 0;
-
         // Currently unused
         // std::string     getHash(){ return this->hash; };
 
@@ -83,7 +79,7 @@ class Directory : public ContentBase{
     public:
         Directory(std::string path){
             if(isValid(path)){
-                this->file_path= path;
+                this->file_path = path;
                 setZipFilePath(this->file_path.string());
                 pullDirnameFromPath();
                 setParentDirPath();
