@@ -30,11 +30,14 @@ class ContentBase{
         ~ContentBase(){};
 
         // Forward declarations
-        void            setZipFilePath(std::string* data);
+        void        setZipFilePath(std::string* data);
 
         // Header defined functions
-        std::string     getPath(){ return this->path; };
-        std::string&    getZipFilePath(){ return this->zip_path; };
+        // std::string     getPath(){ return this->path; };
+        // std::string&    getZipFilePath(){ return this->zip_path; };
+        path        getPath(){ return this->file_path; }
+        path        getZipFilePath(){ return this->zip_path; }
+
 
         // Inhieritance Functions
         virtual bool    isValid(std::string* path) = 0;
@@ -43,32 +46,36 @@ class ContentBase{
         // std::string     getHash(){ return this->hash; };
 
     protected:
-        std::string path;
-        std::string zip_path;
+        // std::string path;
+        // std::string zip_path;
+        path file_path;
+        path zip_path;
 
         // Currently Unused
         // std::vector<std::string> contents;
         // std::string hash;
 };
 
-class File : public ContentBase{
+class File : protected ContentBase{
     public:
-        File(std::string path){
-            if(isValid(&path));
-                // this->hash = this->calculateHash(path);
-        };
+        File(std::string file_path): file_path{ file_path }; 
+
+        // File(std::string path){
+        //     if(isValid(&path));
+        //         // this->hash = this->calculateHash(path);
+        // };
         
         ~File(){};
 
         File& operator=(const File& copy){ return *this; };
 
-        bool isValid(std::string* path) override{
-            if( !(this->filedata = fopen(path->c_str(), "r")) ){
-                return false;
-            }
-            fclose(filedata);
-            return true;
-        }
+        // bool isValid(std::string* path) override{
+        //     if( !(this->filedata = fopen(path->c_str(), "r")) ){
+        //         return false;
+        //     }
+        //     fclose(filedata);
+        //     return true;
+        // }
 
     protected:
 
