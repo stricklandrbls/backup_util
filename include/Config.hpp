@@ -50,7 +50,7 @@ class Config{
 
             Directory* entry = new Directory(path);
 
-            if(entry->isValid(&path))
+            if(entry->isValid(path))
                 config->content_v.push_back(entry);
             else
                 delete(entry);
@@ -62,7 +62,7 @@ class Config{
 
             File* entry = new File(path);
 
-            if(entry->isValid(&path))
+            if(entry->isValid(path))
                 config->content_v.push_back(entry);
             else
                 delete(entry);

@@ -7,7 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
-
+#include <memory>
 /* CONST VARIABLES */
 namespace var{
     const std::string DIR = "directories";
@@ -30,17 +30,18 @@ class ContentBase{
         ~ContentBase(){};
 
         // Forward declarations
-        void        setZipFilePath(std::string* data);
+        void        setZipFilePath(const std::string& data);
+        bool        isValid(const std::string& path);
 
         // Header defined functions
         // std::string     getPath(){ return this->path; };
         // std::string&    getZipFilePath(){ return this->zip_path; };
-        path        getPath(){ return this->file_path; }
-        path        getZipFilePath(){ return this->zip_path; }
+        std::string        getPath(){ return this->file_path.string(); }
+        std::string        getZipFilePath(){ return this->zip_path.string(); }
 
 
         // Inhieritance Functions
-        virtual bool    isValid(std::string* path) = 0;
+        // virtual bool    isValid(std::string* path) = 0;
 
         // Currently unused
         // std::string     getHash(){ return this->hash; };
@@ -56,26 +57,18 @@ class ContentBase{
         // std::string hash;
 };
 
-class File : protected ContentBase{
+class File : public ContentBase{
     public:
-        File(std::string file_path): file_path{ file_path }; 
+        // File(std::string file_path): file_path{ file_path }; 
 
-        // File(std::string path){
-        //     if(isValid(&path));
-        //         // this->hash = this->calculateHash(path);
-        // };
+        File(std::string path){
+            if(isValid(path));
+                // this->hash = this->calculateHash(path);
+        };
         
         ~File(){};
 
         File& operator=(const File& copy){ return *this; };
-
-        // bool isValid(std::string* path) override{
-        //     if( !(this->filedata = fopen(path->c_str(), "r")) ){
-        //         return false;
-        //     }
-        //     fclose(filedata);
-        //     return true;
-        // }
 
     protected:
 
@@ -89,29 +82,17 @@ class File : protected ContentBase{
 class Directory : public ContentBase{
     public:
         Directory(std::string path){
-            if(isValid(&path)){
-                this->path = path;
-                setZipFilePath(&(this->path));
+            if(isValid(path)){
+                this->file_path= path;
+                setZipFilePath(this->file_path.string());
                 pullDirnameFromPath();
                 setParentDirPath();
-                // pullContentsFromPath();
             }
 
         };
         ~Directory(){};
         std::string    _dirname(){ return this->dirname; };
         std::string*    _parent_dir_path(){ return &(this->parent_dir_path); };
-        bool isValid(std::string* path) override{
-            if( !(this->dir = opendir(path->c_str()))){
-                std::string output = "Directory not valid: ";
-                output += *path;
-                Terminal::print(Terminal::err, output);
-
-                return false;
-            }
-            closedir(this->dir);
-            return true;
-        };
 
     protected:
 
@@ -120,12 +101,8 @@ class Directory : public ContentBase{
         std::string dirname;
         std::string parent_dir_path;
         
-        inline void pullDirnameFromPath(){
-            this->dirname = this->zip_path.substr(this->zip_path.find_last_of("/") + 1);
-        };
-        void setParentDirPath(){
-            this->parent_dir_path = this->path.substr(0, this->path.find_last_of("/"));
-        }
+        void pullDirnameFromPath();
+        void setParentDirPath();
 };
 
 struct Destination{
