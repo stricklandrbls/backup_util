@@ -3,7 +3,7 @@ bin/test
 ./vscode
 .vscode
 resource
-build
+build/*
 CMakeFiles
 TODO
 test
