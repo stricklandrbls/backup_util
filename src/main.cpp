@@ -13,17 +13,17 @@ int main(){
     std::string output = "Compressor destination: " + Compressor::getDestinationPath();
     Terminal::print(Terminal::success, output);
     
-    std::vector<Content>*    content_to_compress = config.getContent();
+    // std::vector<Content>*    content_to_compress = &(Config::content_v);
 
     std::string command;
-    std::size_t forks = content_to_compress->size() / 2;
+    std::size_t forks = Config::content_v.size() / 2;
     
     std::size_t middle_bound;
-    (content_to_compress->size() % 2 == 0)? middle_bound = content_to_compress->size() / 2 : middle_bound = (content_to_compress->size() / 2) + 1;
+    (Config::content_v.size() % 2 == 0)? middle_bound = Config::content_v.size() / 2 : middle_bound = (Config::content_v.size() / 2) + 1;
 
     pthread_t thread1, thread2;
-    thread_args args1{content_to_compress, 0, middle_bound};
-    thread_args args2{content_to_compress, middle_bound, content_to_compress->size()};
+    thread_args args1{&Config::content_v, 0, middle_bound};
+    thread_args args2{&Config::content_v, middle_bound, Config::content_v.size()};
 
     pthread_create(&thread1, NULL, Compressor::compress_t, &args1);
     pthread_create(&thread2, NULL, Compressor::compress_t, &args2);

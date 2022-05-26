@@ -6,16 +6,14 @@
 #include <cstdlib>
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include <memory>
 
-using smart_string = std::unique_ptr<std::string>;
 class Config{
     public:
         Config(){};
         ~Config(){};
 
-        // std::vector<Directory*>*    getDirectories();
-        // std::vector<File*>*         getFiles();
         std::vector<Content>*   getContent();
 
         static bool checkConfig();
@@ -28,22 +26,21 @@ class Config{
         void setOutputPath(std::string path);
         void setOutputHost(std::string host);
 
-    protected:
+        static inline std::vector<Content>    content_v;
 
     private:
         std::string output_path;
         std::string output_host;
 
-        // std::vector<Directory*>  directory_v;
-        // std::vector<File*>       file_v;
-        std::vector<Content>    content_v;
 
         nlohmann::json  configData;
 
         void (*type) (std::string);
+
+        // Removed statics, not being used
         static inline void add(void (*type) (std::string, Config*), std::string path, Config* config){ type(path, config); };
         
-        static inline void directory_type(std::string path, Config* config){
+        static void directory_type(std::string path, Config* config){
             smart_string output = std::make_unique<std::string>("Adding directory: ");
             *output += path;
             Terminal::print(Terminal::info, *output);
@@ -51,7 +48,7 @@ class Config{
             Directory* entry = new Directory(path);
 
             if(entry->isValid(path))
-                config->content_v.push_back(entry);
+                Config::content_v.push_back(entry);
             else
                 delete(entry);
         };
@@ -63,7 +60,7 @@ class Config{
             File* entry = new File(path);
 
             if(entry->isValid(path))
-                config->content_v.push_back(entry);
+                Config::content_v.push_back(entry);
             else
                 delete(entry);
         };
