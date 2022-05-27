@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project(BackupUtility VERSION 1.0)
 
 message("-- Setting Sources Variable")
-set(sources src/Compressor.cpp src/main.cpp src/Config.cpp src/Content.cpp)
+set(sources src/Compressor.cpp src/main.cpp src/Config.cpp src/Content.cpp src/ConfigData.cpp)
 
 message("-- Setting Executable: Backup utility")
 add_executable(backup-util ${sources})

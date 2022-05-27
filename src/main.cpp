@@ -1,10 +1,14 @@
 #include "../include/Config.hpp"
 #include "../include/common.hpp"
 #include "../include/Content.hpp"
+#include "../include/ConfigData.hpp"
+
 #include <pthread.h>
 
 int main(){
     Config config = Config();
+    ConfigData config_data{};
+    config_data.printAll();
 
     if( Config::checkConfig() )
         config.parse_config_file();

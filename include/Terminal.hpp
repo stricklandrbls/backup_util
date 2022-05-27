@@ -21,4 +21,7 @@ class Terminal{
         static inline void print(std::string (*type) (std::string), std::string text){
             printf("%s\n", type(text).c_str());
         }
+        static inline void print(const std::string&& text){
+            printf("%s\n", text.c_str());
+        }
 };
