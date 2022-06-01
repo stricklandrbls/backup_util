@@ -1,10 +1,12 @@
-#include <sys/shm.h>
-#include <sys/ipc.h>
-#include <filesystem>
-#include <stdio.h>
-#include "../include/shared-mem.hpp"
+// #include <sys/shm.h>
+// #include <sys/ipc.h>
+// #include <filesystem>
+// #include <stdio.h>
 #include <iostream>
-#include <fstream>
+// #include "../include/shared-mem.hpp"
+// #include <iostream>
+// #include <fstream>
+#include "../include/Terminal.hpp"
 
 int main(){
 
@@ -12,10 +14,16 @@ int main(){
     // printf("Shared Memory Segments created: %d\n", SharedMemInfo::SHARED_MEM_SEGMENTS);
     // printf("Config-data: %s\n", config_data.getShmData());
 
-    std::fstream file_stream { "../config.json" };
-    char* buffer{};
-    file_stream.readsome(buffer, 10);
-    printf("%s\n", buffer);
+    // std::fstream file_stream { "../config.json" };
+    // char* buffer{};
+    // file_stream.readsome(buffer, 10);
+    // printf("%s\n", buffer);
 
+    Terminal::print(Terminal::success, "Test sentence");
 
+    int x = 10;
+    int* x_p = &x;
+    int& x_r = x;
+
+    std::cout << "x_p: " << x_p << "\nx_r: " << &x_r << std::endl;
 }

@@ -7,9 +7,8 @@ ConfigData::ConfigData(){
 
     input >> configuration_data;
     input.close();
-    
+
     for(const auto& element : configuration_data.items()){
-        // addToContentVector(element);
         auto& key = element.key();
         auto& data = element.value();
 
@@ -20,7 +19,7 @@ ConfigData::ConfigData(){
             }
         }
         else if(key == var::FILE){
-            Terminal::print("Unimplemented!");
+            Terminal::print(Terminal::err, "File support: Unimplemented!");
         }
         else if(key == var::DEST){
             output_destination.hostname = (data)[var::HOST];

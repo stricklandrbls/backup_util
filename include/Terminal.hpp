@@ -3,25 +3,9 @@
 
 class Terminal{
     public:
-        static inline std::string err(std::string text){
-            std::string ret = "[!] ";
-            ret += text;
-            return ret;
-        }
-        static inline std::string info(std::string text){
-            std::string ret = "[ ] ";
-            ret += text;
-            return ret;
-        }
-        static inline std::string success(std::string text){
-            std::string ret = "[+] ";
-            ret += text;
-            return ret;
-        }
-        static inline void print(std::string (*type) (std::string), std::string text){
-            printf("%s\n", type(text).c_str());
-        }
-        static inline void print(const std::string&& text){
-            printf("%s\n", text.c_str());
-        }
+        static inline void err(std::string& text){ printf("[!] %s\n", text.c_str()); }
+        static inline void info(std::string& text){ printf("[ ] %s\n", text.c_str()); }
+        static inline void success(std::string& text){ printf("[+] %s\n", text.c_str()); }
+        static inline void print(void (*print) (std::string&), std::string&& text){ print(text); }
+        static inline void print(void (*print) (std::string&), std::string& text){ print(text); }
 };

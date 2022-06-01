@@ -9,7 +9,9 @@ void* Compressor::compress_t(void* args){
     smart_string dir{new std::string};
     smart_string zip{new std::string};
 
-    for(content_it it = thread_arguments->content_to_compress->begin() + thread_arguments->lower_bound; it != thread_arguments->content_to_compress->begin() + thread_arguments->upper_bound; it++)
+    for(content_it  it = thread_arguments->content_to_compress.begin() + thread_arguments->lower_bound; 
+                    it != thread_arguments->content_to_compress.begin() + thread_arguments->upper_bound; 
+                    it++)
     {
         *dir = std::get<Directory*>(*it)->_dirname();
         *zip = std::get<Directory*>(*it)->getZipFilePath();
@@ -21,4 +23,5 @@ void* Compressor::compress_t(void* args){
         #endif
         Terminal::print(Terminal::success, *command);
     }
+    delete thread_arguments;
 }

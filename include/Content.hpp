@@ -101,9 +101,6 @@ class Directory : public ContentBase{
         void setParentDirPath();
 };
 
-struct Destination{
-    std::string* path;
-    std::string* hostname;
-};
+
 
 using Content = std::variant<Directory*, File*>;
