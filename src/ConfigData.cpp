@@ -13,6 +13,7 @@ ConfigData::ConfigData(){
         auto& data = element.value();
 
         if(key == var::DIR){
+            printf("dir\n");
             for(const auto& dir : data){
                 Directory* entry = new Directory(dir);
                 base_content.push_back(entry);
@@ -22,6 +23,7 @@ ConfigData::ConfigData(){
             Terminal::print(Terminal::err, "File support: Unimplemented!");
         }
         else if(key == var::DEST){
+            printf("Dest\n");
             output_destination.hostname = (data)[var::HOST];
             output_destination.hostpath = (data)[var::PATH_D];
         }
