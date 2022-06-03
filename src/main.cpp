@@ -19,6 +19,7 @@ int main(){
     (content_length % 2 == 0)? middle_bound = content_length / 2 : middle_bound = (content_length / 2) + 1;
     
     pthread_t thread1, thread2;
+    
     thread_args args1{content, 0, middle_bound};
     thread_args args2{content, middle_bound, content_length};
 

@@ -6,14 +6,17 @@
 
 **********************************************************************************************************/
 void ContentBase::setZipFilePath(const std::string& data){
-    this->zip_path = data;
+    this->zip_path.string() = data;
     std::string_view zip_v { this->zip_path.string() };
     size_t search_index{};
+    if(zip_v.find(" ")){
+            while(zip_v.find(" ") != std::string::npos && zip_v.find(" ") > search_index) {
+                search_index = zip_v.find(" ");
+                this->zip_path.string().replace(zip_v.find(" "), 1, "\\ ");
+            }
+        }
+    
 
-    while(zip_v.find(" ") != std::string::npos && zip_v.find(" ") > search_index + 1) {
-        search_index = zip_v.find(" ");
-        this->zip_path.string().replace(zip_v.find(" "), 1, "\\ ");
-    }
 }
 
 bool ContentBase::isValid(const std::string& path){

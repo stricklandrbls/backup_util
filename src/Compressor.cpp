@@ -4,10 +4,13 @@
 void* Compressor::compress_t(void* args){
     thread_args* thread_arguments = (thread_args*) args;
 
-    smart_string dest{new std::string(Compressor::getDestinationPath())};
-    smart_string command{new std::string};
-    smart_string dir{new std::string};
-    smart_string zip{new std::string};
+    // smart_string dest{new std::string(Compressor::getDestinationPath())};
+    smart_string dest{std::make_unique<std::string>(Compressor::getDestinationPath())};
+    std::shared_ptr<std::string> command{std::make_shared<std::string>("")};
+    smart_string dir{std::make_unique<std::string>("")};
+    smart_string zip{std::make_unique<std::string>("")};
+
+    std::cout << "Compressing with bounds: [" << thread_arguments->lower_bound << ":" << thread_arguments->upper_bound << "]" << std::endl;
 
     for(content_it  it = thread_arguments->content_to_compress.begin() + thread_arguments->lower_bound; 
                     it != thread_arguments->content_to_compress.begin() + thread_arguments->upper_bound; 
@@ -23,5 +26,6 @@ void* Compressor::compress_t(void* args){
         #endif
         Terminal::print(Terminal::success, *command);
     }
-    delete thread_arguments;
+    // delete thread_arguments;
+    return 0;
 }
