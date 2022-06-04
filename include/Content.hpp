@@ -93,7 +93,6 @@ class Directory : public ContentBase{
     protected:
 
     private:
-        DIR*        dir;
         std::string dirname;
         std::string parent_dir_path;
         

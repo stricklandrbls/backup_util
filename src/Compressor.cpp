@@ -6,7 +6,9 @@ void* Compressor::compress_t(void* args){
 
     // smart_string dest{new std::string(Compressor::getDestinationPath())};
     smart_string dest{std::make_unique<std::string>(Compressor::getDestinationPath())};
+
     std::shared_ptr<std::string> command{std::make_shared<std::string>("")};
+    
     smart_string dir{std::make_unique<std::string>("")};
     smart_string zip{std::make_unique<std::string>("")};
 
