@@ -26,6 +26,9 @@ void* Compressor::compress_t(void* args){
         system((*command).c_str());
         #endif
         Terminal::print(Terminal::success, *command);
+
+        for(const auto& dir_contents : std::filesystem::recursive_directory_iterator(std::get<Directory*>(*it)->getPath()))
+            Terminal::print(Terminal::info, "\t" + dir_contents.path().string());
     }
     
     return 0;

@@ -64,24 +64,45 @@ class File : public ContentBase{
 
 class Directory : public ContentBase{
     public:
+        // Default Constructor
         Directory(std::string path){
-            if(isValid(path)){
+            if(std::filesystem::exists(static_cast<std::filesystem::path>(path))){
                 this->file_path = path;
                 setZipFilePath(this->file_path.string());
                 pullDirnameFromPath();
                 setParentDirPath();
             }
-
         };
-        ~Directory(){};
+
+        // Move Constructor
+        // Directory(Directory&& move_from){
+
+        // };
+
+        // Copy Constructor
+        // Directory(Directory& copy_from){
+
+        // };
+
+        // Move Assignment Operator
+        // Directory& operator=(Directory&& move_from){
+
+        // };
+
+        // Copy Assignment Operator
+        // Directory& operator=(Directory& copy_from){
+
+        // }
+
         std::string    _dirname(){ return this->dirname; };
         std::string*    _parent_dir_path(){ return &(this->parent_dir_path); };
 
     protected:
 
     private:
-        std::string dirname;
         std::string parent_dir_path;
+        std::string dirname;
+        std::filesystem::directory_entry dir;
         
         void pullDirnameFromPath();
         void setParentDirPath();
