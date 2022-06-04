@@ -4,7 +4,6 @@
 void* Compressor::compress_t(void* args){
     thread_args* thread_arguments = (thread_args*) args;
 
-    // smart_string dest{new std::string(Compressor::getDestinationPath())};
     smart_string dest{std::make_unique<std::string>(Compressor::getDestinationPath())};
 
     std::shared_ptr<std::string> command{std::make_shared<std::string>("")};
@@ -28,6 +27,6 @@ void* Compressor::compress_t(void* args){
         #endif
         Terminal::print(Terminal::success, *command);
     }
-    // delete thread_arguments;
+    
     return 0;
 }

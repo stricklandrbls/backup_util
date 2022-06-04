@@ -29,28 +29,15 @@ class ContentBase{
         ContentBase(){};
         ~ContentBase(){};
 
-        // Forward declarations
         void        setZipFilePath(const std::string& data);
         bool        isValid(const std::string& path);
 
-        // Header defined functions
-        // std::string     getPath(){ return this->path; };
-        // std::string&    getZipFilePath(){ return this->zip_path; };
         std::string        getPath(){ return this->file_path.string(); }
         std::string        getZipFilePath(){ return this->zip_path.string(); }
 
-        // Currently unused
-        // std::string     getHash(){ return this->hash; };
-
     protected:
-        // std::string path;
-        // std::string zip_path;
         path file_path;
         path zip_path;
-
-        // Currently Unused
-        // std::vector<std::string> contents;
-        // std::string hash;
 };
 
 class File : public ContentBase{

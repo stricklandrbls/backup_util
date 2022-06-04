@@ -6,13 +6,13 @@ using content_it = std::vector<Content>::iterator;
 
 struct Destination{
     Destination(const std::string& path, const std::string& host) : hostpath{ path }, hostname{ host }{};
-    ~Destination(){printf("Killing Destination\n");}
+    
     const std::string& hostpath;
     const std::string& hostname;
 };
 struct thread_args{
     thread_args(std::vector<Content>& c, std::size_t lb, std::size_t ub): content_to_compress{ c }, lower_bound{ lb }, upper_bound{ ub }{};
-    // ~thread_args(){printf("Killing thread_args\n");}
+
     std::vector<Content>&   content_to_compress;
     size_t lower_bound;
     size_t upper_bound;
