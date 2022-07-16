@@ -27,7 +27,14 @@ using path = std::filesystem::path;
 class ContentBase{
     public:
         ContentBase(){};
+        ContentBase(const ContentBase& copy_from) : file_path{ copy_from.file_path }, zip_path{ copy_from.zip_path }{}
+        ContentBase operator=(const ContentBase& copy_from){
+            if(this == &copy_from) return *this;
+            file_path = copy_from.file_path;
+            zip_path = copy_from.zip_path;
+        }
         ~ContentBase(){};
+
 
         void        setZipFilePath(const std::string& data);
         bool        isValid(const std::string& path);
