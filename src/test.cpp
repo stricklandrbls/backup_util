@@ -6,7 +6,6 @@
 // #include "../include/shared-mem.hpp"
 // #include <iostream>
 // #include <fstream>
-#include "../include/Terminal.hpp"
 
 int main(){
 
@@ -19,7 +18,7 @@ int main(){
     // file_stream.readsome(buffer, 10);
     // printf("%s\n", buffer);
 
-    Terminal::print(Terminal::success, "Test sentence");
+    Logger::print(Logger::LEVEL::SUCCESS, "Test sentence");
 
     int x = 10;
     int* x_p = &x;

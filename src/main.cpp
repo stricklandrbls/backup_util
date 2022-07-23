@@ -6,12 +6,13 @@
 #include <pthread.h>
 
 int main(){
+    Logger::Instance().init_logger("backup.log", "/tmp");
     ConfigData config_data{};
     std::vector<Content>&  content = config_data.content();
     
     Compressor::setDestination(config_data.destination_hostpath(), config_data.destination_hostname());
     
-    Terminal::print(Terminal::success, "Compressor destination: " + Compressor::getDestinationPath());
+    Logger::print(Logger::LEVEL::SUCCESS, "Compressor destination: " + Compressor::getDestinationPath());
     
     std::size_t middle_bound;
     size_t      content_length = content.size();
@@ -29,6 +30,8 @@ int main(){
     pthread_join(thread1, NULL);
     pthread_join(thread2, NULL);
 
+    Logger::close();
+    
     return 0;
 }
 

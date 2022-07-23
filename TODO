@@ -1,5 +1,1 @@
-1. Implement <variant> for content vectors
-2. Implement <filesystem> for tranversing the filesystem.
-3. Implement <string_view> for optimizing string copying.
-4. Implement smartpointers for content insertion.
-4. Work in Coroutine somehow
+1. Create deb install package w/ libbz2-1.0 dependency & libsimpleLogger shared object static link.

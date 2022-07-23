@@ -11,6 +11,7 @@ void* Compressor::compress_t(void* args){
     
     smart_string dir{std::make_unique<std::string>("")};
     smart_string zip{std::make_unique<std::string>("")};
+    smart_string path{std::make_unique<std::string>("")};
 
     std::cout << "Compressing with bounds: [" << thread_arguments->lower_bound << ":" << thread_arguments->upper_bound << "]" << std::endl;
 
@@ -20,13 +21,13 @@ void* Compressor::compress_t(void* args){
     {
         *dir = std::get<Directory*>(*it)->_dirname();
         *zip = std::get<Directory*>(*it)->getZipFilePath();
-
+        *path = std::get<Directory*>(*it)->getPath();
         printf("compressing dir<%p>: %s\n", &(*it), (*dir).c_str());
-        *command = "zip -rq -3 " + *dest + "/" + *dir + " " + *zip;
+        *command = "zip -rq -3 " + *dest + "/" + *dir + ".zip " + *path;
         #ifndef TEST
         system((*command).c_str());
         #endif
-        Terminal::print(Terminal::success, *command);
+        Logger::print(Logger::LEVEL::SUCCESS, *command);
     }
     // delete thread_arguments;
     return 0;

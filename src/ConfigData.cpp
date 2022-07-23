@@ -19,7 +19,7 @@ ConfigData::ConfigData(){
             }
         }
         else if(key == var::FILE){
-            Terminal::print(Terminal::err, "File support: Unimplemented!");
+            Logger::print(Logger::LEVEL::INFO, "File support: Unimplemented!");
         }
         else if(key == var::DEST){
             output_destination.hostname = (data)[var::HOST];

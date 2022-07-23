@@ -43,7 +43,7 @@ class Config{
         static void directory_type(std::string path, Config* config){
             smart_string output = std::make_unique<std::string>("Adding directory: ");
             *output += path;
-            Terminal::print(Terminal::info, *output);
+            Logger::tprint(Logger::LEVEL::INFO, *output);
 
             Directory* entry = new Directory(path);
 
@@ -55,7 +55,7 @@ class Config{
         static inline void file_type(std::string path, Config* config){
             smart_string output = std::make_unique<std::string>("Adding directory: ");
             *output += path;
-            Terminal::print(Terminal::info, *output);
+            Logger::tprint(Logger::LEVEL::INFO, *output);
 
             File* entry = new File(path);
 
